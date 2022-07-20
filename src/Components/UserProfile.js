@@ -26,7 +26,7 @@ const UserProfile = ({ user, userItems, setUser, removeItem }) => {
           src={require(`../assets/userProfileImgs/CCpaintbrushbro-01.png`)}
           alt="not signed in image"
         />
-        <SectionHeader style={{ color: colors.craftGreen }}>
+        <SectionHeader className="not-loggedin" style={{ color: colors.craftGreen }}>
           You're not signed in! Click the button below to sign in or create an
           account.
         </SectionHeader>
