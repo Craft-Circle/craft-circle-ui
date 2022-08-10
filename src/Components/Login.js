@@ -5,21 +5,12 @@ import colors from "../constants/colors";
 import { Link, useNavigate } from "react-router-dom";
 import { useQuery, gql, useLazyQuery } from "@apollo/client";
 
-const GET_USER = gql`
-  query getAUser($email: String!) {
-    details: getAUser(email: $email) {
+const LOGIN_USER = gql`
+  query loginAUser($email: String!, $password: String!) {
+    details: loginAUser(email: $email, password: $password) {
       id
-      email
       name
-      items {
-        id
-        name
-        description
-        available
-        category
-        status
-        amount
-      }
+      email
     }
   }
 `;
@@ -27,13 +18,14 @@ const GET_USER = gql`
 const Login = ({ loginUser }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [getUser, { loading, error, data }] = useLazyQuery(GET_USER);
+  const [loginAUser, { loading, error, data }] = useLazyQuery(LOGIN_USER);
   const [badLogin, setBadLogin] = useState(false);
   let navigate = useNavigate();
 
   const handleLogin = () => {
-    if (password === "password") {
-      getUser({ variables: { email: email } }).then((data) => {
+    loginAUser({ variables: { email: email, password: password } }).then(
+      (data) => {
+        //UPDATE HERE WITH CORRECT LOG IN INFO
         if (data.data) {
           setBadLogin(false);
           loginUser(data.data.details);
@@ -41,10 +33,8 @@ const Login = ({ loginUser }) => {
         } else {
           setBadLogin(true);
         }
-      });
-    } else {
-      setBadLogin(true);
-    }
+      }
+    );
   };
 
   return (
