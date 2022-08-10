@@ -3,21 +3,59 @@ import styled from "styled-components";
 import Button from "./Button";
 import colors from "../constants/colors";
 import { Link, useNavigate } from "react-router-dom";
-import { useQuery, gql, useLazyQuery } from "@apollo/client";
+import { gql, useMutation } from "@apollo/client";
+
+const CREATE_USER = gql`
+  mutation createUser(
+    $name: String!
+    $email: String!
+    $password: String!
+    $confirmPassword: String!
+  ) {
+    createUser(
+      input: {
+        name: $name
+        email: $email
+        password: $password
+        passwordConfirmation: $confirmPassword
+      }
+    ) {
+      user {
+        id
+        name
+        email
+      }
+    }
+  }
+`;
 
 const SignIn = () => {
+  const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [badPassword, setBadPassword] = useState(false);
   const [missingInfo, setMissingInfo] = useState(false);
+  const [createUser, { loading, error, data }] = useMutation(CREATE_USER);
   let navigate = useNavigate();
 
   const handleSignUp = () => {
-    if (password === confirmPassword && email && password) {
-      navigate("/profile");
-      setBadPassword(false);
-      setMissingInfo(false);
+    if (password === confirmPassword && email && password && userName) {
+      createUser({
+        variables: {
+          name: userName,
+          email: email,
+          password: password,
+          passwordConfirmation: confirmPassword,
+        },
+      }).then((data) => {
+        console.log(data);
+        if (data.data) {
+          setBadPassword(false);
+          setMissingInfo(false);
+          navigate("/login");
+        }
+      });
     } else if (password !== confirmPassword) {
       setBadPassword(true);
     } else {
@@ -32,9 +70,15 @@ const SignIn = () => {
         <Text>Enter the below info to create your crafter profile</Text>
         {missingInfo && (
           <ErrorMessage>
-            Info Missing: Please fill in all required fields.
+            Missing info: Please fill in all required fields.
           </ErrorMessage>
         )}
+        <Label>Crafter Name:</Label>
+        <Input
+          type="text"
+          onChange={(e) => setUserName(e.target.value)}
+          value={userName}
+        />
         <Label>Email:</Label>
         <Input
           type="text"
@@ -73,7 +117,7 @@ const LoginPageSection = styled.section`
 `;
 
 const LoginBox = styled.div`
-  height: 500px;
+  height: 600px;
   width: 400px;
   background: white;
   border-radius: 25px;

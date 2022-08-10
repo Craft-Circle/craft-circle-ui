@@ -67,7 +67,7 @@ const Login = ({ loginUser }) => {
         />
         <Text>
           Don't have an account?{" "}
-          <SignUpLink to="/signIn">Sign up here</SignUpLink>
+          <SignUpLink to="/signin">Sign up here</SignUpLink>
         </Text>
       </LoginBox>
       <Button action={handleLogin} name="Login" link="" />
