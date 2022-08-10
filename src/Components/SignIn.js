@@ -5,77 +5,55 @@ import colors from "../constants/colors";
 import { Link, useNavigate } from "react-router-dom";
 import { useQuery, gql, useLazyQuery } from "@apollo/client";
 
-const GET_USER = gql`
-  query getAUser($email: String!) {
-    details: getAUser(email: $email) {
-      id
-      email
-      name
-      items {
-        id
-        name
-        description
-        available
-        category
-        status
-        amount
-      }
-    }
-  }
-`;
-
-const Login = ({ loginUser }) => {
+const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [getUser, { loading, error, data }] = useLazyQuery(GET_USER);
-  const [badLogin, setBadLogin] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [badPassword, setBadPassword] = useState(false);
   let navigate = useNavigate();
 
-  const handleLogin = () => {
-    if (password === "password") {
-      getUser({ variables: { email: email } }).then((data) => {
-        if (data.data) {
-          setBadLogin(false);
-          loginUser(data.data.details);
-          navigate("/profile");
-        } else {
-          setBadLogin(true);
-        }
-      });
+  const handleSignUp = () => {
+    if (password === confirmPassword) {
+      navigate("/profile");
+      setBadPassword(false);
     } else {
-      setBadLogin(true);
+      setBadPassword(true);
     }
   };
 
   return (
     <LoginPageSection className="login-page">
       <LoginBox className="login-modal">
-        {badLogin && (
-          <LoginError>Invalid email or password. Please try again.</LoginError>
-        )}
         <Label>Email:</Label>
         <Input
           type="text"
           onChange={(e) => setEmail(e.target.value)}
           value={email}
         />
+        {badPassword && (
+          <PasswordError>
+            Password doesn't match. Please try again.
+          </PasswordError>
+        )}
         <Label>Password:</Label>
         <Input
           type="password"
           onChange={(e) => setPassword(e.target.value)}
           value={password}
         />
-        <Text>
-          Don't have an account?{" "}
-          <SignUpLink to="/signIn">Sign up here</SignUpLink>
-        </Text>
+        <Label>Confirm Password:</Label>
+        <Input
+          type="password"
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          value={confirmPassword}
+        />
       </LoginBox>
-      <Button action={handleLogin} name="Login" link="" />
+      <Button action={handleSignUp} name="Sign Up" link="" />
     </LoginPageSection>
   );
 };
 
-export default Login;
+export default SignIn;
 
 const LoginPageSection = styled.section`
   display: flex;
@@ -124,7 +102,7 @@ const SignUpLink = styled(Link)`
   color: ${colors.craftOrange};
 `;
 
-const LoginError = styled.p`
+const PasswordError = styled.p`
   font-size: 15px;
   font-weight: 700;
   color: ${colors.craftOrange};

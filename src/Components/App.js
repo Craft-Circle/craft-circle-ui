@@ -14,6 +14,7 @@ import NoMatch from "./NoMatch";
 import LoadingPage from "./LoadingPage";
 import Confirmation from "./Confirmation";
 import ErrorPage from "./ErrorPage";
+import SignIn from "./SignIn";
 
 const GET_ITEMS = gql`
   query getItems {
@@ -111,6 +112,7 @@ function App() {
         />
         <Route exact path="confirmation" element={<Confirmation />} />
         <Route exact path="login" element={<Login loginUser={loginUser} />} />
+        <Route exact path="signin" element={<SignIn />} />
         <Route path="*" element={<NoMatch />} />
       </Routes>
     </main>
