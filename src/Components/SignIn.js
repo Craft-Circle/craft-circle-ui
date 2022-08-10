@@ -10,20 +10,31 @@ const SignIn = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [badPassword, setBadPassword] = useState(false);
+  const [missingInfo, setMissingInfo] = useState(false);
   let navigate = useNavigate();
 
   const handleSignUp = () => {
-    if (password === confirmPassword) {
+    if (password === confirmPassword && email && password) {
       navigate("/profile");
       setBadPassword(false);
-    } else {
+      setMissingInfo(false);
+    } else if (password !== confirmPassword) {
       setBadPassword(true);
+    } else {
+      setMissingInfo(true);
     }
   };
 
   return (
     <LoginPageSection className="login-page">
       <LoginBox className="login-modal">
+        <WelcomeMessage>Welcome to Craft Circle!</WelcomeMessage>
+        <Text>Enter the below info to create your crafter profile</Text>
+        {missingInfo && (
+          <ErrorMessage>
+            Info Missing: Please fill in all required fields.
+          </ErrorMessage>
+        )}
         <Label>Email:</Label>
         <Input
           type="text"
@@ -31,9 +42,7 @@ const SignIn = () => {
           value={email}
         />
         {badPassword && (
-          <PasswordError>
-            Password doesn't match. Please try again.
-          </PasswordError>
+          <ErrorMessage>Password doesn't match. Please try again.</ErrorMessage>
         )}
         <Label>Password:</Label>
         <Input
@@ -60,15 +69,16 @@ const LoginPageSection = styled.section`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  height: 100vh;
 `;
 
 const LoginBox = styled.div`
-  height: 300px;
+  height: 500px;
   width: 400px;
   background: white;
   border-radius: 25px;
   box-shadow: 20px 20px 0px ${colors.craftBlue};
-  margin: 5%;
+  margin: 2%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -90,19 +100,18 @@ const Label = styled.label`
   color: ${colors.craftGreen};
 `;
 
+const WelcomeMessage = styled.h2`
+  color: ${colors.craftBlue};
+  margin: 0;
+`;
+
 const Text = styled.p`
   font-size: 15px;
   font-weight: 700;
   color: ${colors.craftBlue};
 `;
 
-const SignUpLink = styled(Link)`
-  font-size: 15px;
-  font-weight: 700;
-  color: ${colors.craftOrange};
-`;
-
-const PasswordError = styled.p`
+const ErrorMessage = styled.p`
   font-size: 15px;
   font-weight: 700;
   color: ${colors.craftOrange};
