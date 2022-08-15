@@ -2,7 +2,7 @@ import styled from "styled-components";
 import React from "react";
 import InventoryCard from "./InventoryCard";
 
-const InventoryContainer = ({ data, color, removeItem }) => {
+const InventoryContainer = ({ data, color, removeItem, unlistItem, relistItem }) => {
   const items = data.map((item) => {
     return (
       <InventoryCard
@@ -12,6 +12,8 @@ const InventoryContainer = ({ data, color, removeItem }) => {
         name={item.name}
         amount={item.amount}
         color={color}
+        unlistItem={unlistItem}
+        relistItem={relistItem}
       />
     );
   });

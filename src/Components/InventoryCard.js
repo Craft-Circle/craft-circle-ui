@@ -5,8 +5,9 @@ import Popup from "reactjs-popup";
 import ToggleSwitch from "./ToggleSwitch";
 import PopupModal from "./PopupModal";
 
-const InventoryCard = ({ name, amount, color, id, removeItem }) => {
+const InventoryCard = ({ name, amount, color, id, removeItem, unlistItem, relistItem}) => {
   const [currentlyActive, setActiveStatus] = useState("list");
+ 
 
   return (
     <ItemCardSection className={`${color} item-card`}>
@@ -22,8 +23,11 @@ const InventoryCard = ({ name, amount, color, id, removeItem }) => {
           textOne={"list"}
           textTwo={"unlist"}
           color={color}
-          action={setActiveStatus}
+          setActiveStatus={setActiveStatus}
           currentlyActive={currentlyActive}
+          id={id}
+          unlistItem={unlistItem}
+          relistItem={relistItem}
         />
         <StyledPopup
           trigger={

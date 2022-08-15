@@ -1,14 +1,60 @@
 import React from "react";
 import styled from "styled-components";
 import colors from "../constants/colors";
+import { gql, useMutation } from "@apollo/client";
 
-const ToggleSwitch = ({ textOne, textTwo, color, action, currentlyActive }) => {
+const EDIT_ITEM = gql`
+  mutation editItem(
+    $id: ID!,
+    $available: Int!) {
+    editItem(
+      input: {
+        id: $id,
+        available: $available
+      })
+    {
+      item{
+        id
+        available
+        user {
+          id
+          name
+          email
+        }
+      }
+    }
+  }
+`
+
+const ToggleSwitch = ({ textOne, textTwo, color, setActiveStatus, currentlyActive, id, unlistItem, relistItem }) => {
+  const [editItem, {loading, error, data }] = useMutation(EDIT_ITEM)
+
   const makeOneActive = () => {
-    action(textOne);
+    setActiveStatus(textOne);
+    editItem({
+      variables: {
+        id: id, 
+        available: 1,
+      },
+    }).then((response) => {
+    //do something with the data here 
+    })
+    relistItem(id)
+   // do a mutation to update available to true 
   };
 
   const makeTwoActive = () => {
-    action(textTwo);
+    setActiveStatus(textTwo);
+    editItem({
+      variables: {
+        id: id, 
+        available: 0,
+      },
+    }).then((response) => {
+      // do something with the data here
+    })
+    unlistItem(id)
+  // do a mutation to update available to false 
   };
 
   return (
