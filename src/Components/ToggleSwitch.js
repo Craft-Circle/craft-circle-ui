@@ -30,28 +30,29 @@ const ToggleSwitch = ({ textOne, textTwo, color, setActiveStatus, currentlyActiv
   const [editItem, {loading, error, data }] = useMutation(EDIT_ITEM)
 
   const makeOneActive = () => {
-    setActiveStatus(textOne);
     editItem({
       variables: {
         id: id, 
         available: 1,
       },
     }).then((response) => {
-    //do something with the data here 
+    if (response.data.editItem.item.available === "true") {
+      setActiveStatus(textOne);
+    }
     })
     relistItem(id)
-   // do a mutation to update available to true 
   };
 
   const makeTwoActive = () => {
-    setActiveStatus(textTwo);
     editItem({
       variables: {
         id: id, 
         available: 0,
       },
     }).then((response) => {
-      // do something with the data here
+      if (response.data.editItem.item.available === "false") {
+        setActiveStatus(textTwo);
+      }
     })
     unlistItem(id)
   // do a mutation to update available to false 

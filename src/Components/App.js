@@ -58,11 +58,6 @@ function App() {
       setAllItems(availableItems);
     }
   }, [allCraftItems.data]);
-// when the application refreshes, the list/unlist works, but does not refresh immediately after user has updated an item 
-// the mutations are working 
-// in app, we have a remove item func that uses filter to remove the item when the delete mutation happens 
-// we could do something similar to handle and edit, and filter through, find the same ID and then change the availability accordingly 
-// that would be invoked in the handleOne/ two funcs that are in toggle switch 
 
   const loginUser = (userData) => {
     setUser(userData);
@@ -81,15 +76,19 @@ function App() {
 
   const unlistItem = (id) => {
     setAllItems(allItems.filter((item) => item.id !== id));
+    const unlistedItem = userItems.find(item => {
+      return item.id === id
+    })
     // probably need to somehow update the user's items here too so the change is the same 
   }
 
   const relistItem = (id) => {
-    const relistedItem = userItems.filter((item) => {
+    const relistedItem = userItems.find((item) => {
       return item.id === id
     })
     setAllItems([...allItems, relistedItem])
     // same thing here- we need to update the user's item to keep the change on the toggle switch 
+    
   }
 
   if (loading) return <LoadingPage />;
