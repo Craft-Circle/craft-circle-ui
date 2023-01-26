@@ -44,16 +44,12 @@ orbs:
   cypress: cypress-io/cypress@2
 workflows:
   version: 2
-    build:
-    jobs:
-      # "cypress" is the name of the imported orb
-      # "run" is the name of the job defined in Cypress orb
-      - cypress/run:
-          start: npm start
-          wait-on: 'http://localhost:3000'
   build-deploy:
     jobs:
       - build:
+          - cypress/run:
+          start: npm start
+          wait-on: 'http://localhost:3000'
           filters:
             branches:
               only:
