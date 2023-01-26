@@ -40,16 +40,11 @@ jobs:
       - run:
           name: Deploy to Netlify
           command: ./node_modules/.bin/netlify deploy --site $NETLIFY_SITE_ID --auth $NETLIFY_ACCESS_TOKEN --prod --dir=build
-orbs:
-  cypress: cypress-io/cypress@2
 workflows:
   version: 2
   build-deploy:
     jobs:
       - build:
-          - cypress/run:
-          start: npm start
-          wait-on: 'http://localhost:3000'
           filters:
             branches:
               only:
