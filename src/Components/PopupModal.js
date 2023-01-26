@@ -13,7 +13,7 @@ const DELETE_ITEM = gql`
 `;
 
 const PopupModal = ({ id, close, removeItem }) => {
-  const [deleteItem, { loading, error, data }] = useMutation(DELETE_ITEM);
+  const [deleteItem] = useMutation(DELETE_ITEM);
 
   const handleClick = (e) => {
     deleteItem({

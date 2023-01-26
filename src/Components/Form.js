@@ -49,7 +49,7 @@ const Form = ({ addItem, user }) => {
   const [description, setItemDescription] = useState("");
   const [category, setItemCategory] = useState("");
   const [missingInfo, setMissingInfo] = useState(false);
-  const [createItem, { loading, error, data }] = useMutation(CREATE_ITEM);
+  const [createItem, { loading, error }] = useMutation(CREATE_ITEM);
   const navigate = useNavigate();
 
   const handleCreateItem = (e) => {

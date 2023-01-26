@@ -11,8 +11,6 @@
 #           wait-on: 'http://localhost:3000'
 
 version: 2.1
-orbs:
-  cypress: cypress-io/cypress@2
 jobs:
   build:
     working_directory: ~/repo
