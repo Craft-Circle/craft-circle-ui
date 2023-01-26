@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import Button from "./Button";
 import colors from "../constants/colors";
-import AboutPage from "./AboutPage";
 
 const ItemExpanded = ({ findItem }) => {
   const { craftId } = useParams();
@@ -12,7 +11,7 @@ const ItemExpanded = ({ findItem }) => {
 
   useEffect(() => {
     setItem(findItem(craftId));
-  }, [item]);
+  }, [findItem, craftId]);
 
   return (
     <ItemExpandedSection className="item-expanded">
@@ -70,10 +69,6 @@ const DescP = styled.p`
   color: ${colors.craftGrey};
   font-weight: bold;
   max-width: 80%;
-`;
-const NameP = styled.p`
-  color: ${colors.craftGrey};
-  font-weight: bold;
 `;
 
 const CategoryP = styled.p`

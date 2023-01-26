@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Button from "./Button";
 import colors from "../constants/colors";
 import { Link, useNavigate } from "react-router-dom";
-import { useQuery, gql, useLazyQuery } from "@apollo/client";
+import { gql, useLazyQuery } from "@apollo/client";
 
 const GET_USER = gql`
   query getAUser($email: String!) {
@@ -27,7 +27,7 @@ const GET_USER = gql`
 const Login = ({ loginUser }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [getUser, { loading, error, data }] = useLazyQuery(GET_USER);
+  const [getUser] = useLazyQuery(GET_USER);
   const [badLogin, setBadLogin] = useState(false);
   let navigate = useNavigate();
 

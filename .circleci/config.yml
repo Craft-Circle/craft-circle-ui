@@ -46,6 +46,9 @@ workflows:
   version: 2
   build-deploy:
     jobs:
+      - cypress/run:
+          start: npm start
+          wait-on: "http://localhost:3000"
       - build:
           filters:
             branches:
