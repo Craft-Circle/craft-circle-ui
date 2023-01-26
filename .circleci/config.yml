@@ -51,6 +51,6 @@ workflows:
             branches:
               only:
                 - main
-      # - cypress/run:
-      #     start: npm start
-      #     wait-on: "http://localhost:3000"
+      - cypress/run:
+          start: npm start
+          wait-on: "http://localhost:3000"
