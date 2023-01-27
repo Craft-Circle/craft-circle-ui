@@ -2,7 +2,7 @@ import {
   aliasQuery,
   aliasMutation,
   hasOperationName,
-} from "../utils/graphql-test-utils";
+} from "./utils/graphql-test-utils";
 
 describe("Craft Circle landing page view", () => {
   beforeEach(() => {

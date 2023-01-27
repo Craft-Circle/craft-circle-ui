@@ -2,7 +2,7 @@ import {
   aliasQuery,
   aliasMutation,
   hasOperationName,
-} from "../utils/graphql-test-utils";
+} from "./utils/graphql-test-utils";
 
 describe("Landing Page", () => {
   it("Should display a landing page with a nav bar, carousel, category icons, and item cards, and be able to search, filter by category, and use nab bar", () => {
