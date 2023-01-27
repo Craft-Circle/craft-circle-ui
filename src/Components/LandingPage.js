@@ -12,9 +12,13 @@ const LandingPage = ({ itemData }) => {
 
   useEffect(() => {
     setFilteredItems(itemData);
-  }, []);
+  }, [itemData]);
 
   useEffect(() => {
+    const compareName = (item) => {
+      return item.name.toUpperCase().includes(searchFilter.toUpperCase());
+    };
+
     category
       ? setFilteredItems(
           itemData.filter(
@@ -22,11 +26,7 @@ const LandingPage = ({ itemData }) => {
           )
         )
       : setFilteredItems(itemData.filter((item) => compareName(item)));
-  }, [category, searchFilter]);
-
-  const compareName = (item) => {
-    return item.name.toUpperCase().includes(searchFilter.toUpperCase());
-  };
+  }, [category, searchFilter, itemData]);
 
   const changeCategory = (newCategory) => {
     newCategory === category ? setCategory("") : setCategory(newCategory);

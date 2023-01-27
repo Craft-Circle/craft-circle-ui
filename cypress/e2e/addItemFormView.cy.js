@@ -2,7 +2,7 @@ import {
   aliasQuery,
   aliasMutation,
   hasOperationName,
-} from "../utils/graphql-test-utils";
+} from "./utils/graphql-test-utils";
 
 describe("Add Item Form Page", () => {
   beforeEach(() => {

@@ -11,7 +11,7 @@ const UserProfile = ({ user, userItems, setUser, removeItem }) => {
 
   useEffect(() => {
     setCurrentUser(user);
-  }, []);
+  }, [user]);
 
   const handleLogout = () => {
     setCurrentUser(null);
